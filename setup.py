@@ -15,7 +15,7 @@ setup(
     license='BSD',
     python_requires='>=2.7',
     install_requires = [
-        'p4p>=3.1.0',
+        'p4p>=3.1.1',
         'Cython>=0.25.2',
     ],
     zip_safe = False,
