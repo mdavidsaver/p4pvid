@@ -40,15 +40,15 @@ def yuv422_rgb24(yuv):
     return out
 
 _mangle = {
-    'YUYV':yuv422_rgb24,
+    b'YUYV':yuv422_rgb24,
     # assume multi-byte gray is LSB
-    'Y12 ':lambda I:numpy.frombuffer(I, '<u2').reshape(I.shape[:2]),
-    'Y16 ':lambda I:numpy.frombuffer(I, '<u2').reshape(I.shape[:2]),
+    b'Y12 ':lambda I:numpy.frombuffer(I, '<u2').reshape(I.shape[:2]),
+    b'Y16 ':lambda I:numpy.frombuffer(I, '<u2').reshape(I.shape[:2]),
     # formats which need no special handling
-    'GRAY':numpy.asarray,
-    'RGB3':numpy.asarray,
+    b'GRAY':numpy.asarray,
+    b'RGB3':numpy.asarray,
     # partially supported YUV modes.  Provide only Y's as a gray scale
-    'Y444':lambda I:I[:,:,1],
-    'YVYU':lambda I:I[:,:,0],
-    'UYVY':lambda I:I[:,:,1],
+    b'Y444':lambda I:I[:,:,1],
+    b'YVYU':lambda I:I[:,:,0],
+    b'UYVY':lambda I:I[:,:,1],
 }
