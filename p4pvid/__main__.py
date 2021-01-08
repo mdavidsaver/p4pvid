@@ -13,13 +13,22 @@ from p4p.server import Server, StaticProvider
 
 from . import v4l, color
 
+def getargs():
+    from argparse import ArgumentParser
+    P = ArgumentParser()
+    P.add_argument('video', help='A V4L2 device (eg. /dev/video0')
+    P.add_argument('pvname')
+    return P
+
+args = getargs().parse_args()
+
 pv = SharedPV(nt=NTNDArray(),
               initial=numpy.zeros((0,0), dtype='u1'))
 provider = StaticProvider('capture')
-provider.add(sys.argv[2], pv)
+provider.add(args.pvname, pv)
 
 # open the capture device, and run the Server
-with open(sys.argv[1], 'r+b', 0) as F, Server(providers=[provider]):
+with open(args.video, 'r+b', 0) as F, Server(providers=[provider]):
     caps = v4l.query_capabilities(F.fileno())
 
     print('capabilities', caps)
